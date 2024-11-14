@@ -25,7 +25,6 @@ public class AnimeController {
 
     if (name == null) return ResponseEntity.ok(animesGetResponse);
 
-
     var animesFiltered = animesGetResponse
             .stream()
             .filter(anime -> anime.getName().equalsIgnoreCase(name))
