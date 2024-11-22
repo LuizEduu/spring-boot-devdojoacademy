@@ -14,13 +14,5 @@ public class Anime {
     private String name;
     private LocalDateTime createdAt;
 
-    private static List<Anime> animes = new ArrayList<>();
-    static  {
-        var now = LocalDateTime.now();
-        animes.addAll(List.of(new Anime(1L, "One piece", now),new Anime(2L, "Dbz", now), new Anime(3L, "Jujustu kaisen", now)));
-    }
 
-    public static List<Anime> getAnimes() {
-        return animes;
-    }
 }
