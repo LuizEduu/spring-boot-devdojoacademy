@@ -33,6 +33,6 @@ public class ProducerService {
       return;
     }
 
-    repository.delete(id);
+    repository.delete(producer.get());
   }
 }

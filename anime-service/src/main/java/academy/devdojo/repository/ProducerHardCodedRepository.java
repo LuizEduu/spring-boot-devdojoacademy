@@ -1,44 +1,35 @@
 package academy.devdojo.repository;
 
 import academy.devdojo.domain.Producer;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
+@AllArgsConstructor
 public class ProducerHardCodedRepository {
-  private static final List<Producer> producers = new ArrayList<>();
-
-  static {
-    var now = LocalDateTime.now();
-    producers.addAll(List.of(
-            Producer.builder().id(1L).name("Mappa").createdAt(now).build(),
-            Producer.builder().id(2L).name("Kyoto Animation").createdAt(now).build(),
-            Producer.builder().id(3L).name("Madhouse").createdAt(now).build()
-    ));
-  }
+  private final ProducerData producers;
 
   public List<Producer> findAll(String name) {
     if (name == null) {
-      return producers;
+      return producers.getProducers();
     }
-    return producers.stream().filter(producer -> producer.getName().equalsIgnoreCase(name)).toList();
+    return producers.getProducers().stream().filter(producer -> producer.getName().equalsIgnoreCase(name)).toList();
   }
 
   public Optional<Producer> findById(Long id) {
-    return producers.stream().filter(p -> p.getId().equals(id)).findFirst();
+    return producers.getProducers().stream().filter(p -> p.getId().equals(id)).findFirst();
   }
 
   public Producer save(Producer producer) {
-    producers.add(producer);
+    producers.getProducers().add(producer);
 
     return producer;
   }
 
-  public void delete(Long id) {
-    producers.remove(id);
+    public void delete(Producer producer) {
+    producers.getProducers().remove(producer);
   }
 }
