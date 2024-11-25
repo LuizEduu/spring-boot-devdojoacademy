@@ -2,7 +2,6 @@ package academy.devdojo.repository;
 
 import academy.devdojo.domain.Anime;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
