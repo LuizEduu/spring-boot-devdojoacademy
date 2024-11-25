@@ -4,12 +4,14 @@ spring:
   threads:
     virtual:
       enabled: true
-
+logging:
+  level:
+    academy.devdojo: debug #package name
 server:
   servlet:
     context-path: /
   error:
-    include-stacktrace: never
+    include-stacktrace: on_param
   tomcat:
     threads:
       max: 20

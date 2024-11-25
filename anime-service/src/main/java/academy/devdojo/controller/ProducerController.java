@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ import java.util.List;
 @RequestMapping("v1/producers")
 @RequiredArgsConstructor
 public class ProducerController {
-  private  final ProducerMapper mapper;
+  private final ProducerMapper mapper;
   private final ProducerService service;
 
   @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
