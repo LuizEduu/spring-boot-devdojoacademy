@@ -14,6 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 //@ExtendWith(SpringExtension.class) caso eu queira utilizar as funcionalidades do spring nos testes
 @ExtendWith(MockitoExtension.class) //mockito para mocks
@@ -97,5 +98,28 @@ class ProducerHardCodedRepositoryTest {
 
     var producers = sut.findAll("not found name");
     Assertions.assertThat(producers).isNotNull().hasSameElementsAs(List.of());
+  }
+
+  @Test
+  @DisplayName("save creates a producer")
+  void save_CreatesProducer_WhenSuccessfull() {
+    BDDMockito.when(producerData.getProducers()).thenReturn(producers);
+    var producerToSave = Producer.builder().id(99L).name("MAPPA").createdAt(LocalDateTime.now()).build();
+    var producer = sut.save(producerToSave);
+    Assertions.assertThat(producer).isEqualTo(producerToSave).hasNoNullFieldsOrProperties();
+
+    Optional<Producer> producerSaved = sut.findById(producerToSave.getId());
+    Assertions.assertThat(producerSaved).isPresent().contains(producerToSave);
+    Assertions.assertThat(producers).hasSize(producers.size());
+  }
+
+  @Test
+  @DisplayName("delete a producer")
+  void delete_RemoveProducer_WhenSuccessfull() {
+    BDDMockito.when(producerData.getProducers()).thenReturn(producers);
+
+    var producerToRemove = producers.getFirst();
+    sut.delete(producerToRemove);
+    Assertions.assertThat(this.producers).doesNotContain(producerToRemove);
   }
 }

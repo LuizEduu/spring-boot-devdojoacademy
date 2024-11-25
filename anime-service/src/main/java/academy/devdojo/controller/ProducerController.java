@@ -31,7 +31,7 @@ public class ProducerController {
 
   @GetMapping("{id}")
   public ResponseEntity<ProducerGetResponse> findById(@PathVariable Long id) {
-    var producer = service.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producer not found."));
+    var producer = service.findByIdOrThrowNotFound(id);
 
     var response = mapper.toProducerGetResponse(producer);
     return ResponseEntity.ok(response);

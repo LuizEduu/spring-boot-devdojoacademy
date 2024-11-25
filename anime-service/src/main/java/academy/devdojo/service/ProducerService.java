@@ -3,7 +3,9 @@ package academy.devdojo.service;
 import academy.devdojo.domain.Producer;
 import academy.devdojo.repository.ProducerHardCodedRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,9 +20,11 @@ public class ProducerService {
     return repository.findAll(name);
   }
 
-  public Optional<Producer> findById(Long id) {
-    return repository.findById(id);
+  public Producer findByIdOrThrowNotFound(Long id) {
+    return repository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producer not Found"));
   }
+
 
   public Optional<Producer> findByName(String name) {
     return repository.findByName(name);
@@ -31,12 +35,7 @@ public class ProducerService {
   }
 
   public void delete(Long id) {
-    var producer = repository.findById(id);
-
-    if (producer.isEmpty()) {
-      return;
-    }
-
-    repository.delete(producer.get());
+    var producer = findByIdOrThrowNotFound(id);
+    repository.delete(producer);
   }
 }

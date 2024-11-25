@@ -1,18 +1,16 @@
 package academy.devdojo.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
+@Builder
 @AllArgsConstructor
 public class Anime {
-    private Long id;
-    private String name;
-    private LocalDateTime createdAt;
-
-
+  private Long id;
+  private String name;
+  private LocalDateTime createdAt;
 }
