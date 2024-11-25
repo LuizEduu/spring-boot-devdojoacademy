@@ -22,6 +22,10 @@ public class ProducerService {
     return repository.findById(id);
   }
 
+  public Optional<Producer> findByName(String name) {
+    return repository.findByName(name);
+  }
+
   public Producer save(Producer producer) {
     return repository.save(producer);
   }

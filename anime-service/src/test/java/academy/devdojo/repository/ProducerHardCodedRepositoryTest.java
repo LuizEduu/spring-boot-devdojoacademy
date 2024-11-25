@@ -40,6 +40,44 @@ class ProducerHardCodedRepositoryTest {
   @DisplayName("findAll returns a list with all producers")
   void findAll_ReturnsAllProducers_WhenSuccessfull() {
     var response = sut.findAll(null);
-    Assertions.assertThat(response).isNotNull().hasSize(producers.size());
+    Assertions.assertThat(response).isNotNull().hasSameElementsAs(producers);
+  }
+
+  @Test
+  @DisplayName("findById returns a producer with given id")
+  void findByIdReturnsProducerById_WhenSuccessfull() {
+    BDDMockito.when(producerData.getProducers()).thenReturn(producers);
+    var expectedProducer = producers.getFirst();
+    var producer = sut.findById(expectedProducer.getId());
+    Assertions.assertThat(producer).isPresent().contains(expectedProducer);
+  }
+
+  @Test
+  @DisplayName("findByName returns a producer with given name")
+  void findByNameReturnsProducerByName_WhenSuccessfull() {
+    BDDMockito.when(producerData.getProducers()).thenReturn(producers);
+
+    var expectedProducer = producers.getLast();
+    var producer = sut.findByName(expectedProducer.getName());
+    Assertions.assertThat(producer).isPresent().contains(expectedProducer);
+  }
+
+  @Test
+  @DisplayName("findAll returns all producers when name is null")
+  void findAllReturnsAllProducersWhenNameIsNull_WhenSuccessfull() {
+    BDDMockito.when(producerData.getProducers()).thenReturn(producers);
+
+    var expectedProducers = sut.findAll(null);
+    Assertions.assertThat(expectedProducers).isNotNull().hasSameElementsAs(producers);
+  }
+
+  @Test
+  @DisplayName("findAll returns a producer with given a name")
+  void findAllReturnsProducerByName_WhenSuccessfull() {
+    BDDMockito.when(producerData.getProducers()).thenReturn(producers);
+
+    var expectedProducer = producers.getLast();
+    var producers = sut.findAll(expectedProducer.getName());
+    Assertions.assertThat(producers).isNotNull().hasSameElementsAs(List.of(expectedProducer));
   }
 }

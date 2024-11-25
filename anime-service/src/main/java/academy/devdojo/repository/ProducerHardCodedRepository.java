@@ -19,8 +19,13 @@ public class ProducerHardCodedRepository {
     return producers.getProducers().stream().filter(producer -> producer.getName().equalsIgnoreCase(name)).toList();
   }
 
+
   public Optional<Producer> findById(Long id) {
     return producers.getProducers().stream().filter(p -> p.getId().equals(id)).findFirst();
+  }
+
+  public Optional<Producer> findByName(String name) {
+    return producers.getProducers().stream().filter(p -> p.getName().equalsIgnoreCase(name)).findFirst();
   }
 
   public Producer save(Producer producer) {
