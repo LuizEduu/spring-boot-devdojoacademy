@@ -63,6 +63,15 @@ class ProducerHardCodedRepositoryTest {
   }
 
   @Test
+  @DisplayName("findByName returns a empty list when name is not found")
+  void findByNameReturnsEmptyListWithNameNotFound_WhenSuccessfull() {
+    BDDMockito.when(producerData.getProducers()).thenReturn(producers);
+
+    var producer = sut.findByName("not found name");
+    Assertions.assertThat(producer).isNotPresent();
+  }
+
+  @Test
   @DisplayName("findAll returns all producers when name is null")
   void findAllReturnsAllProducersWhenNameIsNull_WhenSuccessfull() {
     BDDMockito.when(producerData.getProducers()).thenReturn(producers);
@@ -79,5 +88,14 @@ class ProducerHardCodedRepositoryTest {
     var expectedProducer = producers.getLast();
     var producers = sut.findAll(expectedProducer.getName());
     Assertions.assertThat(producers).isNotNull().hasSameElementsAs(List.of(expectedProducer));
+  }
+
+  @Test
+  @DisplayName("findAll returns a empty list when name is not found")
+  void findAllReturnsEmptyListWithNameNotFound_WhenSuccessfull() {
+    BDDMockito.when(producerData.getProducers()).thenReturn(producers);
+
+    var producers = sut.findAll("not found name");
+    Assertions.assertThat(producers).isNotNull().hasSameElementsAs(List.of());
   }
 }
